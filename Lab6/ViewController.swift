@@ -19,6 +19,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        dayData.append(Day(city: "Santa Maria", condition: "Sunny", temp: 69, day: "Monday"))
     }
 
     override func didReceiveMemoryWarning() {
@@ -31,15 +33,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return dayData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TVCell", for: indexPath) as! TwitterTVCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TVCell", for: indexPath) as! DayTVCell
+        let thisDay = dayData[indexPath.row]
         
-        let thisTweet = ourTweets[indexPath.row]
-        cell.headerLabel!.text = thisTweet.sender
-        cell.bodyLabel!.text = thisTweet.body
+        cell.dayLabel.text = thisDay.day
+        let forecast = "\(thisDay.temp ?? 0)"
+        cell.forecastLabel.text = forecast
+        
+        cell.highLabel.text = ""
+        cell.lowLabel.text = ""
+        cell.precipitationLabel.text = "0"
+        
         
         return cell
     }
